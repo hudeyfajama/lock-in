@@ -53,6 +53,40 @@ describe('GoalCard add-step gating', () => {
   })
 })
 
+describe('GoalCard sub-steps', () => {
+  function splitStep() {
+    const subStep = makeGoal({ title: 'Al-Mujadila', parent_goal_id: 'step' })
+    const step = makeGoal({ id: 'step', title: 'Juz 28', parent_goal_id: 'goal', children: [subStep] })
+    return makeGoal({ id: 'goal', title: 'Revise 5 Juz', children: [step] })
+  }
+
+  it('shows a step’s sub-steps nested under it', () => {
+    renderWithProviders(<GoalCard goal={splitStep()} />)
+
+    expect(screen.getByText('Juz 28')).toBeInTheDocument()
+    expect(screen.getByText('Al-Mujadila').closest('.subgoal-children')).not.toBeNull()
+  })
+
+  it('offers a sub-step on a step but not on a sub-step', async () => {
+    const added: string[] = []
+    renderWithProviders(
+      <GoalCard goal={splitStep()} canAddChild onAddChild={(goal) => added.push(goal.title)} />,
+    )
+
+    await userEvent.click(screen.getByRole('button', { name: /add a sub-step to juz 28/i }))
+    expect(added).toEqual(['Juz 28'])
+    expect(
+      screen.queryByRole('button', { name: /add a sub-step to al-mujadila/i }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('hides the sub-step button once adding is closed', () => {
+    renderWithProviders(<GoalCard goal={splitStep()} canAddChild={false} onAddChild={() => {}} />)
+
+    expect(screen.queryByRole('button', { name: /add a sub-step/i })).not.toBeInTheDocument()
+  })
+})
+
 describe('GoalCard step reorder', () => {
   it('offers a drag handle when there are two or more steps', () => {
     renderWithProviders(<GoalCard goal={twoSteps()} />)
@@ -79,8 +113,8 @@ describe('GoalCard step reorder', () => {
     renderWithProviders(<GoalCard goal={parent} />)
 
     const handle = screen.getByRole('button', { name: /reorder finish the api/i })
-    const firstRow = handle.closest('.subgoal')
-    const secondRow = screen.getByRole('button', { name: /reorder finish the ui/i }).closest('.subgoal')
+    const firstRow = handle.closest('.subgoal-group')
+    const secondRow = screen.getByRole('button', { name: /reorder finish the ui/i }).closest('.subgoal-group')
     expect(firstRow).toBeTruthy()
     expect(secondRow).toBeTruthy()
     stubRect(firstRow!, 0)

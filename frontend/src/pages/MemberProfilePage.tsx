@@ -158,10 +158,23 @@ export function MemberProfilePage() {
                     </Pill>
                   </div>
                   {goal.children.map((child) => (
-                    <div className="subgoal" key={child.id}>
-                      <span>{child.title}</span>
-                      <Progress value={child.progress_percentage} tone="muted" />
-                      <b>{Math.round(child.progress_percentage)}%</b>
+                    <div className="subgoal-group" key={child.id}>
+                      <div className="subgoal">
+                        <span>{child.title}</span>
+                        <Progress value={child.progress_percentage} tone="muted" />
+                        <b>{Math.round(child.progress_percentage)}%</b>
+                      </div>
+                      {child.children.length > 0 && (
+                        <div className="subgoal-children">
+                          {child.children.map((subStep) => (
+                            <div className="subgoal" key={subStep.id}>
+                              <span>{subStep.title}</span>
+                              <Progress value={subStep.progress_percentage} tone="muted" />
+                              <b>{Math.round(subStep.progress_percentage)}%</b>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </article>

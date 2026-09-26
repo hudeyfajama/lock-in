@@ -80,10 +80,11 @@ the commitment, the daily record, and the reckoning at the end.
   your percentage is measured over. Optional goals are tracked and shown but
   left out of that number, including when they sit alone in a category: the
   category still appears, the headline does not drop.
-- **Steps** — optional one-level sub-goals. You check in on the steps; the
-  parent averages its required children, the same rule categories use. Use
-  this when the work is a few named finish-lines, not when you already have a
-  running total. Drag them into the
+- **Steps** — optional sub-goals, up to two levels deep: a goal can have
+  steps, and a step can have sub-steps (the **+** on a step's row). You check
+  in on the lowest level; each parent averages its required children, the same
+  rule categories use. Use this when the work is a few named finish-lines, not
+  when you already have a running total. Drag steps or sub-steps into the
   order you want; that order is what check-in uses, and it can still change
   after the lock.
 - In-app **?** buttons next to tracking method and Add step explain the above.
