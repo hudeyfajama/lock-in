@@ -128,8 +128,8 @@ A remote MCP endpoint at `/mcp` so a member can connect their own LLM.
 - Add goals and sub-steps any time until the challenge ends, even after your
   commitment locks — adding only strengthens it. Editing wording or targets is
   only possible before the lock; once locked, the model can change just
-  visibility and ordering (including the order of steps under a goal), and can
-  never remove a goal.
+  visibility and ordering (including the order of steps under a goal and
+  sub-steps under a step), and can never remove a goal.
 - Log today's check-in.
 - Revoke a token from Settings if it leaks (OAuth connections appear as
   “ChatGPT”). Connecting shares that member's view of the team with their LLM
